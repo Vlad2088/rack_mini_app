@@ -1,5 +1,6 @@
-class TimeFormat
+# frozen_string_literal: true
 
+class TimeFormat
   TIME_FORMAT = {
     'year' => '%Y',
     'month' => '%m',
@@ -7,7 +8,7 @@ class TimeFormat
     'hour' => '%H',
     'minute' => '%M',
     'second' => '%S'
-  }
+  }.freeze
 
   def initialize(params)
     @format_params = params['format']&.split(',')
