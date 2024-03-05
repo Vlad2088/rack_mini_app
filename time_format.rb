@@ -14,19 +14,21 @@ class TimeFormat
     @format_params = params['format']&.split(',')
   end
 
-  def valid?
+  def format_valid?
     unknow_formats.empty?
   end
 
-  def unknow_formats
-    @format_params - TIME_FORMAT.keys
-  end
-
-  def result
+  def current_time_formatted
     Time.now.strftime(TIME_FORMAT.values_at(*@format_params).join('-'))
   end
 
   def error_message
     "Unknown time format [#{unknow_formats.join(', ')}]"
+  end
+
+  private
+
+  def unknow_formats
+    @format_params - TIME_FORMAT.keys
   end
 end

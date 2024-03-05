@@ -8,18 +8,25 @@ class App
     handle_time(request)
   end
 
+  private
+
   def handle_time(request)
+    status = 200
+    body = ''
+
     if request.params['format'].nil?
-      @response = Rack::Response.new('enter param', 200)
+      body = 'enter param'
     else
       time_format = TimeFormat.new(request.params)
 
-      @response = if time_format.valid?
-                    Rack::Response.new(time_format.result, 200)
-                  else
-                    Rack::Response.new(time_format.error_message, 400)
-                  end
+      if time_format.format_valid?
+        body = time_format.current_time_formatted
+      else
+        status = 400
+        body = time_format.error_message
+      end
     end
+    @response = Rack::Response.new(body, status)
     @response.finish
   end
 end
